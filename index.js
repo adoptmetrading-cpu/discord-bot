@@ -1,19 +1,19 @@
-// Este script mantiene el proceso corriendo 24/7 y responde a health checks
-console.log("Bot encendido y corriendo 24/7 🚀");
+const { Client, GatewayIntentBits } = require("discord.js");
+require("dotenv").config();
+const express = require("express");
 
-setInterval(() => {
-  console.log("Estoy vivo...");
-}, 60000);
-
-// Servidor HTTP para health checks de Koyeb
-const http = require("http");
-
-const server = http.createServer((req, res) => {
-  res.writeHead(200);
-  res.end("Estoy vivo!");
+// Inicializar el bot de Discord
+const client = new Client({
+  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
 });
 
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`Servidor de salud escuchando en puerto ${PORT}`);
+client.once("ready", () => {
+  console.log(`Bot conectado como ${client.user.tag}`);
 });
+
+client.login(process.env.TOKEN);
+
+// Mantener vivo el servicio en Koyeb con Express
+const app = express();
+app.get("/", (req, res) => res.send("Bot corriendo en Koyeb"));
+app.listen(process.env.PORT || 8080);
