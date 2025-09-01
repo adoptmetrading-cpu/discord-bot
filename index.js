@@ -1,18 +1,6 @@
-const { Client, GatewayIntentBits } = require("discord.js");
+// Este script mantiene el proceso corriendo 24/7
+console.log("Bot encendido y corriendo 24/7 🚀");
 
-const client = new Client({
-  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
-});
-
-client.once("ready", () => {
-  console.log(`✅ Bot conectado como ${client.user.tag}`);
-});
-
-client.on("messageCreate", (message) => {
-  if (message.author.bot) return;
-  if (message.content === "!ping") {
-    message.reply("🏓 Pong!");
-  }
-});
-
-client.login(process.env.DISCORD_TOKEN);
+setInterval(() => {
+  console.log("Estoy vivo...");
+}, 60000); // cada minuto imprime mensaje
